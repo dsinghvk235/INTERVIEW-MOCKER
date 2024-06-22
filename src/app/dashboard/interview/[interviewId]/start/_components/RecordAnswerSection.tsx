@@ -17,6 +17,7 @@ interface RecordAnswerSectionProps {
     interviewData: any; // Adjust the type as per your schema
 }
 
+
 function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, interviewData }: RecordAnswerSectionProps) {
     const [userAnswer, setUserAnswer] = useState('');
     const { user } = useUser();
@@ -34,13 +35,13 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         useLegacyResults: false
     });
 
-    useEffect(() => {
-        if (results) {
-            results.forEach((result: ResultType) => {
-                setUserAnswer(prevAns => prevAns + result.transcript);
-            });
-        }
-    }, [results]);
+useEffect(() => {
+    if (results) {
+        (results as ResultType[]).forEach((result: ResultType) => {
+            setUserAnswer(prevAns => prevAns + result.transcript);
+        });
+    }
+}, [results]);
 
     useEffect(() => {
         if (!isRecording && userAnswer.length > 10) {
@@ -92,7 +93,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
     return (
         <div className='flex items-center justify-center flex-col'>
             <div className='flex flex-col mt-20 justify-center items-center bg-black rounded-lg p-5'>
-                <Image src={'/webcam.png'} width={200} height={200} className='absolute' />
+            <Image src={'/webcam.png'} width={200} height={200} className='absolute' alt="Webcam" />
                 <Webcam
                     mirrored={true}
                     style={{
